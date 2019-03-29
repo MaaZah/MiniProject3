@@ -35,9 +35,7 @@ public class network {
                             {0,0,0,0,0,0,0,0,0,1}
                         };
 
-        //X = np.T(X);
-        //Y = np.T(Y);
-
+        // constants
         int nSamples = 10;
         int nInputs = 45;
         int nodes = 5;
@@ -46,7 +44,7 @@ public class network {
         double learnRate = 0.01;
 
         
-        //layer 1 weights (nimputs columns, nodes rows)
+        //layer 1 weights (ninputs columns, nodes rows)
         //mth row is mth input, nth column is nth node
         double[][] W1 = np.random(nInputs, nodes);
         double[][] b1 = new double[nSamples][nodes];
@@ -97,6 +95,7 @@ public class network {
             W2 = np.subtract(W2, np.multiply(learnRate, dW2));
             b2 = np.subtract(b2, np.multiply(learnRate, db2));
 
+            //grab values for plotting/printing
             if(q == epocs-1){
         		printMatrix(Z2);
         	}
@@ -115,25 +114,13 @@ public class network {
             		{(double)q, SSE(deltaE2[9])},
             	});
             	
-            	/*toPlot.add(new double[][]{
-            		{(double)q, SSE(Z2[0])},
-            		{(double)q, SSE(Z2[1])},
-            		{(double)q, SSE(Z2[2])},
-            		{(double)q, SSE(Z2[3])},
-            		{(double)q, SSE(Z2[4])},
-            		{(double)q, SSE(Z2[5])},
-            		{(double)q, SSE(Z2[6])},
-            		{(double)q, SSE(Z2[7])},
-            		{(double)q, SSE(Z2[8])},
-            		{(double)q, SSE(Z2[9])},
-            	});*/
-            	
             }
 
         }
         List<double[]> newPoints = new ArrayList<double[]>();
         List<double[][]> readyToPlot= new ArrayList<double[][]>();
         
+        //plot values
         for(int i = 0; i<toPlot.get(0).length;i++){
         	newPoints = new ArrayList<double[]>();
         	for(int j=0;j<toPlot.size();j++){
@@ -168,6 +155,7 @@ public class network {
         
     }
 
+    //function for printing mxn matrix
     public static void printMatrix(double[][] mat){
 
         System.out.print("[");
@@ -180,12 +168,14 @@ public class network {
         }
     }
     
+    //function for printing an array
     public static void printMatrix(double[] mat){
     	for(int i = 0; i< mat.length;i++){
     		System.out.println(mat[i]);
     	}
     }
     
+    //function to calculate the sum squared error
     public static double SSE(double[] mat){
     	double sum = 0;
     	for(int i = 0; i<mat.length;i++){
