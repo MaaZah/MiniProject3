@@ -41,9 +41,6 @@ public class plot extends JFrame {
 	    XYSeries series = new XYSeries("trendline");
 	    
 	    for(int i = 0; i< mat.length;i++){
-	    	System.out.println(mat[i][0]);
-	    	System.out.println(mat[i][1]);
-	    	System.out.println("**********************************************");
 	    	series.add(mat[i][0], mat[i][1]);
 	    }
 

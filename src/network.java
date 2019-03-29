@@ -67,16 +67,9 @@ public class network {
             //apply sigmoid layer 1
             double[][] Z1 = np.sigmoid(sumL1);
 
-            // printMatrix(sumL1, nSamples, nodes);
-            // printMatrix(Z1, nSamples, nodes);
-
-
             //apply weights layer 2
             double[][] sumL2 = np.add(np.dot(Z1,W2),b2);
             double[][] Z2 = np.sigmoid(sumL2);
-
-            // printMatrix(sumL2, 1, 9);
-            // printMatrix(Z2, 1, 9);
 
             //BACK PROPaGATION
 
@@ -104,7 +97,11 @@ public class network {
             W2 = np.subtract(W2, np.multiply(learnRate, dW2));
             b2 = np.subtract(b2, np.multiply(learnRate, db2));
 
+            if(q == epocs-1){
+        		printMatrix(Z2);
+        	}
             if(q % (epocs/10) == 0){
+            	
             	toPlot.add(new double[][]{
             		{(double)q, SSE(deltaE2[0])},
             		{(double)q, SSE(deltaE2[1])},
@@ -131,17 +128,13 @@ public class network {
             		{(double)q, SSE(Z2[9])},
             	});*/
             	
-               /* System.out.println("****************");
-                printMatrix(deltaE2);
-                System.out.println("");
-                printMatrix(Z2);*/
             }
 
         }
         List<double[]> newPoints = new ArrayList<double[]>();
         List<double[][]> readyToPlot= new ArrayList<double[][]>();
         
-        for(int i = 0; i<toPlot.get(i).length-1;i++){
+        for(int i = 0; i<toPlot.get(0).length;i++){
         	newPoints = new ArrayList<double[]>();
         	for(int j=0;j<toPlot.size();j++){
         		newPoints.add(toPlot.get(j)[i]);
@@ -176,12 +169,21 @@ public class network {
     }
 
     public static void printMatrix(double[][] mat){
+
+        System.out.print("[");
         for(int i = 0; i < mat.length; i++){
             for(int j = 0; j< mat[i].length; j++){
                 System.out.print(mat[i][j] + ", ");
             }
-            System.out.println("");
+            System.out.println("]");
+            System.out.print("[");
         }
+    }
+    
+    public static void printMatrix(double[] mat){
+    	for(int i = 0; i< mat.length;i++){
+    		System.out.println(mat[i]);
+    	}
     }
     
     public static double SSE(double[] mat){
